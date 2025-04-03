@@ -66,10 +66,11 @@ public class CardDeliveryTest {
     }
 
     @Test
+    @Step("Позитивный сценарий заказа карты")
     public void testOrderFlowPositive() {
 
         cardPage.fillOrderForm(city, date, name, phone, accept);
-        cardPage.checkOrderSuccessMessage("Встреча успешно запланирована н " + date);
+        cardPage.checkOrderSuccessMessage("Встреча успешно запланирована на " + date);
 
         date = DataGenerator.generateDate(3);
         cardPage.replanAndGetMessage(date, "У вас уже запланирована встреча на другую дату. Перепланировать?");
@@ -79,6 +80,7 @@ public class CardDeliveryTest {
     }
 
     @Test
+    @Step("Негативный сценарий заказа карты")
     public void testOrderFlowNegative() {
         cardPage.fillOrderForm(city, date, name, phone, accept);
         cardPage.checkOrderSuccessMessage("Встреча успешно запланирована на " + date);
@@ -89,6 +91,7 @@ public class CardDeliveryTest {
     }
 
     @Test
+    @Step("Негативный сценарий заказа карты. Пустое значение в поле Город")
     public void testOrderFlowNegativeCity() {
         city = "";
 
@@ -97,6 +100,7 @@ public class CardDeliveryTest {
     }
 
     @Test
+    @Step("Негативный сценарий заказа карты. Некорректное значение в поле Город")
     public void testOrderFlowNegativeCityIncorrect() {
         String localeCity = "en";
         city = generateAddress(localeCity);
@@ -106,6 +110,7 @@ public class CardDeliveryTest {
     }
 
     @Test
+    @Step("Негативный сценарий заказа карты. Некорректное значение в поле Дата")
     public void testOrderFlowNegativeDate() {
         date = "1";
 
@@ -114,6 +119,7 @@ public class CardDeliveryTest {
     }
 
     @Test
+    @Step("Негативный сценарий заказа карты. Пустое значение в поле Город")
     public void testOrderFlowNegativeDateEmpty() {
         date = " ";
 
@@ -122,6 +128,7 @@ public class CardDeliveryTest {
     }
 
     @Test
+    @Step("Негативный сценарий заказа карты. Пустое значение в поле ФИО")
     public void testOrderFlowNegativeNameEmpty() {
         name = "";
 
@@ -130,6 +137,7 @@ public class CardDeliveryTest {
     }
 
     @Test
+    @Step("Негативный сценарий заказа карты. Некорректное значение в поле ФИО")
     public void testOrderFlowNegativeNameIncorrect() {
         String nameLocale = "en";
         name = generateName(nameLocale);
@@ -139,6 +147,7 @@ public class CardDeliveryTest {
     }
 
     @Test
+    @Step("Негативный сценарий заказа карты. Пустое значение в поле Телефон")
     public void testOrderFlowNegativePhoneEmpty() {
         phone = "";
 
@@ -147,6 +156,7 @@ public class CardDeliveryTest {
     }
 
     @Test
+    @Step("Негативный сценарий заказа карты. Неактивен чек бокс Согласие")
     public void testOrderFlowNegativeAgreement() {
         accept = false;
 
