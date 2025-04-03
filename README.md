@@ -1,8 +1,4 @@
 # reporting
 
-# Для успешных тестов нет скриншота
-![image](https://github.com/user-attachments/assets/faf01a8c-98d4-4521-8db1-bafb0a0dac56)
+<img width="1714" alt="image" src="https://github.com/user-attachments/assets/b1ddbc3d-0584-4137-b0e8-47e3894d9c33" />
 
-# Для упавших тестов есть скриншот
-![image](https://github.com/user-attachments/assets/79d29482-775d-4b4d-9b07-266662e68487)
-![image](https://github.com/user-attachments/assets/cc29d9a4-46ff-4c54-8c58-10ddd2320c99)
