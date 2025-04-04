@@ -1,32 +1,16 @@
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Screenshots;
-import com.codeborne.selenide.junit5.ScreenShooterExtension;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import data.DataGenerator;
 import io.qameta.allure.Step;
-import org.junit.jupiter.api.AfterEach;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.extension.ExtensionContext;
-import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.api.extension.TestWatcher;
 import pages.CardPage;
-import org.openqa.selenium.TakesScreenshot;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.WebDriverRunner;
-import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 
 import static com.codeborne.selenide.Selenide.open;
 import static data.DataGenerator.*;
 
-@ExtendWith(CardDeliveryTest.ScreenshotOnFailureExtension.class)
 public class CardDeliveryTest {
 
     private CardPage cardPage;
@@ -43,6 +27,7 @@ public class CardDeliveryTest {
         Configuration.reportsFolder = "target/selenide/reports";
         open("http://localhost:9999/");
         cardPage = new CardPage();
+        SelenideLogger.addListener("allure", new AllureSelenide());
 
         locale = "ru";
         UserInfo userInfo = DataGenerator.DeliveryCard.generateUser(locale);
@@ -53,16 +38,11 @@ public class CardDeliveryTest {
         accept = userInfo.getAccept();
 
     }
-    @Attachment(value = "Page screenshot", type = "image/png")
-    public static byte[] takeScreenshot() {
-        return ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
-    }
 
-    public static class ScreenshotOnFailureExtension implements TestWatcher {
-        @Override
-        public void testFailed(ExtensionContext context, Throwable cause) {
-            takeScreenshot();
-        }
+
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
     }
 
     @Test
