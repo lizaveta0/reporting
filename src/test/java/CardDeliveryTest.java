@@ -4,6 +4,7 @@ import data.DataGenerator;
 import io.qameta.allure.Step;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.CardPage;
@@ -22,13 +23,16 @@ public class CardDeliveryTest {
     String phone;
     Boolean accept;
 
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+
     @BeforeEach
     public void setUp() {
         Configuration.reportsFolder = "target/selenide/reports";
         open("http://localhost:9999/");
         cardPage = new CardPage();
-        SelenideLogger.addListener("allure", new AllureSelenide());
-
         locale = "ru";
         UserInfo userInfo = DataGenerator.DeliveryCard.generateUser(locale);
         city = userInfo.getCity();
@@ -38,7 +42,6 @@ public class CardDeliveryTest {
         accept = userInfo.getAccept();
 
     }
-
 
     @AfterAll
     static void tearDownAll() {
